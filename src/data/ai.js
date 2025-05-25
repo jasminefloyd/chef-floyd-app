@@ -1,3 +1,4 @@
+// src/services/anthropicService.js
 import { Anthropic } from '@anthropic-ai/sdk';
 import { fetchApiKey } from './keys';
 
@@ -13,35 +14,32 @@ ingredients. Follow these detailed instructions for each response you provide:
 - Response MUST be formatted in the most recent version of markdown to make it easier to render to a web page.
 - Start EVERY response with the Recipe title in bold font weight and centered, followed by "Here's what you'll need:"
 - End EVERY response with "Bon Appetit! 🍽️", centered and in bold font weight
-`
+`;
 
 export async function getRecipeFromChefClaude(ingredientsArr) {
-  // 1) pull the key at runtime
+  // 1) Fetch your secret at runtime
   const key = await fetchApiKey();
-  // 2) instantiate the client *with* dangerouslyAllowBrowser
+
+  // 2) Instantiate the client with the browser flag
   const anthropic = new Anthropic({
     apiKey: key,
     dangerouslyAllowBrowser: true
   });
 
-  // …then the rest of your call…
+  // 3) Build and send the message
   const ingredientsString = ingredientsArr.join(', ');
-  const response = await anthropic.messages.create({
+  const msg = await anthropic.messages.create({
     model: 'claude-3-haiku-20240307',
     max_tokens: 1024,
     system: SYSTEM_PROMPT,
-    messages: [{
-      role: 'user',
-      content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!`
-    }],
+    messages: [
+      {
+        role: 'user',
+        content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!`
+      }
+    ]
   });
-  // …
+
+  // 4) Return the recipe text
+  return msg.content[0].text;
 }
-
-
-const API_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY;
-
-const anthropic = new Anthropic({
-    apiKey: API_KEY,
-    dangerouslyAllowBrowser: true,
-})
