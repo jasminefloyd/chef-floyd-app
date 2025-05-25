@@ -27,7 +27,7 @@ export default function Main() {
 
     return (
         <main>
-            <h3>What's for dinner tonight!</h3>
+            <h3>What are we cooking today!</h3>
             <p> Add the ingredients you have on hand to see what Chef Floyd can whip up tonight</p>
             <form action={addIngredient} className="add-ingredient-form">
                 <input
