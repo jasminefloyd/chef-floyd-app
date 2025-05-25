@@ -17,10 +17,7 @@ ingredients. Follow these detailed instructions for each response you provide:
 `;
 
 export async function getRecipeFromChefClaude(ingredientsArr) {
-  // 1) Fetch your secret at runtime
   const key = await fetchApiKey();
-
-  // 2) Instantiate the client with the browser flag
   const anthropic = new Anthropic({
     apiKey: key,
     dangerouslyAllowBrowser: true

@@ -16,7 +16,10 @@ export default function IngredientsList(props) {
                 <button
                     onClick={props.getRecipe}
                     disabled={props.loading}               // ← disable while loading
-                    style={{ opacity: props.loading ? 0.6 : 1, cursor: props.loading ? 'wait' : 'pointer' }}
+                    style={{ 
+                        opacity: props.loading ? 0.6 : 1, 
+                        cursor: props.loading ? 'wait' : 'pointer' 
+                    }}
                     >{props.loading ? '⏳ Thinking…'  : 'Get a recipe'}
                  </button>
             </div>}

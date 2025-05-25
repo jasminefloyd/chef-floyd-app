@@ -12,13 +12,13 @@ export async function fetchApiKey() {
     .from('api_keys')
     .select('value')
     .eq('id', 'anthropic')
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error('Supabase key-load error:', error);
     throw new Error('Unable to load API key');
   }
-  if (!data?.value) {
+  if (!data || !data.value) {
     console.error('No key found for id "anthropic"');
     throw new Error('API key not found in database');
   }
