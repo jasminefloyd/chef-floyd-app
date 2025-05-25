@@ -32,6 +32,17 @@ main {
     padding-bottom: 60px;
 }
 
+main > h3 {
+  text-align: center;
+  font-size: 1.3em;
+}
+
+main > p {
+  text-align: center;
+  font-size: 1em;
+  padding-bottom: 2em;
+}
+
 .add-ingredient-form {
     display: flex;
     justify-content: center;
@@ -157,17 +168,41 @@ ul.ingredients-list > li {
     font-weight: 400;
   }
   main {
-    padding: 15px 15px 10px;
+    padding: 15px 5px 10px;
     padding-bottom: 70px;
   }
+
+  main > h3 {
+  text-align: center;
+  font-size: 1.3em;
+  display: flex;
+  justify-self: center;
+  text-align: center;
+}
+
+  main > p {
+    display: flex;
+    justify-self: center;
+    text-align: center;
+    font-size: 1em;
+    padding-bottom: 2em;
+    width: 85%;
+  }
+
+
   .add-ingredient-form {
     flex-direction: column;
     height: auto;
+    justify-self: center;
   }
-  .add-ingredient-form > input,
-  .add-ingredient-form > button {
+  .add-ingredient-form > input {
     font-size: 0.875rem;
     padding: 8px 12px;
+  }
+    .add-ingredient-form > button {
+    font-size: 0.875rem;
+    padding: 8px 12px;
+    margin-left: 17.8em;
   }
   ul.ingredients-list > li {
     line-height: 24px;
