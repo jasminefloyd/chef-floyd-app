@@ -1,4 +1,5 @@
-import Anthropic from "@anthropic-ai/sdk"
+import { Anthropic } from '@anthropic-ai/sdk';
+import { fetchApiKey } from './keys';
 
 const SYSTEM_PROMPT = `
 You are an expert cookbook author that receives a list of ingredients that a user 
@@ -14,24 +15,33 @@ ingredients. Follow these detailed instructions for each response you provide:
 - End EVERY response with "Bon Appetit! 🍽️", centered and in bold font weight
 `
 
+export async function getRecipeFromChefClaude(ingredientsArr) {
+  // 1) pull the key at runtime
+  const key = await fetchApiKey();
+  // 2) instantiate the client *with* dangerouslyAllowBrowser
+  const anthropic = new Anthropic({
+    apiKey: key,
+    dangerouslyAllowBrowser: true
+  });
+
+  // …then the rest of your call…
+  const ingredientsString = ingredientsArr.join(', ');
+  const response = await anthropic.messages.create({
+    model: 'claude-3-haiku-20240307',
+    max_tokens: 1024,
+    system: SYSTEM_PROMPT,
+    messages: [{
+      role: 'user',
+      content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!`
+    }],
+  });
+  // …
+}
+
+
 const API_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY;
 
 const anthropic = new Anthropic({
     apiKey: API_KEY,
     dangerouslyAllowBrowser: true,
 })
-
-export async function getRecipeFromChefClaude(ingredientsArr) {
-    const ingredientsString = ingredientsArr.join(", ")
-
-    const msg = await anthropic.messages.create({
-        model: "claude-3-haiku-20240307",
-        max_tokens: 1024,
-        system: SYSTEM_PROMPT,
-        messages: [
-            { role: "user", content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!` },
-        ],
-    });
-    return msg.content[0].text
-}
-
